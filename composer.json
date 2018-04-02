@@ -1,0 +1,14 @@
+{
+    "name": "lullabot/drupal-symfony-lock",
+    "type": "library",
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name": "Andrew Berry",
+            "email": "deviantintegral@gmail.com"
+        }
+    ],
+    "require": {
+        "drupal/core": "^8.5"
+    }
+}
