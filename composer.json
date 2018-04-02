@@ -29,7 +29,8 @@
   },
   "require-dev": {
     "phpunit/phpunit": "^6.5",
-    "drupal/coder": "^2.12"
+    "drupal/coder": "^2.12",
+    "squizlabs/php_codesniffer": "^2.8"
   },
   "repositories": [
     {
