@@ -2,9 +2,11 @@
 
 [![CircleCI](https://circleci.com/gh/Lullabot/drupal-symfony-lock.svg?style=svg)](https://circleci.com/gh/Lullabot/drupal-symfony-lock) [![Maintainability](https://api.codeclimate.com/v1/badges/448ece0f1e569fc7d649/maintainability)](https://codeclimate.com/github/Lullabot/drupal-symfony-lock/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/448ece0f1e569fc7d649/test_coverage)](https://codeclimate.com/github/Lullabot/drupal-symfony-lock/test_coverage) [![Packagist](https://img.shields.io/packagist/dt/lullabot/drupal-symfony-lock.svg)](https://packagist.org/packages/lullabot/drupal-symfony-lock)
 
-Do you want to use a PHP library that requires Symfony's Lock Component in your
-Drupal site? This library maps Drupal's LockBackendInterface to a Symfony
-StoreInterface.
+Do you want to use a PHP library that requires Symfony's
+[Lock Component](https://symfony.com/doc/3.4/components/lock.html) in your Drupal
+site? This library maps Drupal's
+[LockBackendInterface](https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Lock%21LockBackendInterface.php/interface/LockBackendInterface/8.5.x) to a
+[Symfony StoreInterface](https://api.symfony.com/3.4/Symfony/Component/HttpKernel/HttpCache/StoreInterface.html).
 
 ## Usage
 
