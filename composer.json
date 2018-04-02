@@ -1,33 +1,40 @@
 {
   "name": "lullabot/drupal-symfony-lock",
-    "type": "library",
-    "license": "GPL-2.0+",
-    "authors": [
-    {
-      "name": "Andrew Berry",
-      "email": "deviantintegral@gmail.com"
+  "description": "Use Drupal's lock backends with Symfony's locking API.",
+  "type": "library",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+  {
+    "name": "Andrew Berry",
+    "email": "deviantintegral@gmail.com"
+  }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "drupal/core": "^8.5",
+    "symfony/lock": "^3.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "Lullabot\\DrupalSymfonyLock\\": "src/"
     }
-    ],
-    "require": {
-      "php": ">=7.0",
-      "drupal/core": "^8.5",
-      "symfony/lock": "^3.4"
-    },
-    "autoload": {
-      "psr-4": {
-        "Lullabot\\DrupalSymfonyLock\\": "src/"
-      }
-    },
-    "autoload-dev": {
-      "psr-4": {
-        "Lullabot\\DrupalSymfonyLock\\Tests\\": "tests/src/"
-      }
-    },
-    "extra": {
-      "composer-version": "^1.6.3"
-    },
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Lullabot\\DrupalSymfonyLock\\Tests\\": "tests/src/"
+    }
+  },
+  "extra": {
+    "composer-version": "^1.6.3"
+  },
   "require-dev": {
     "phpunit/phpunit": "^6.5",
     "drupal/coder": "^8.2"
-  }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    }
+  ]
 }
