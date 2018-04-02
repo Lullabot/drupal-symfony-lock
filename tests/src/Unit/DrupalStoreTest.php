@@ -64,12 +64,12 @@ class DrupalStoreTest extends TestCase {
   /**
    * Tests retrying and succeeding a lock.
    *
-   * @dataProvider retryDataProvider
-   *
    * @param string $method
    *   The method name to call.
    * @param int $duration
    *   The expected duration of the lock.
+   *
+   * @dataProvider retryDataProvider
    */
   public function testRetry($method, $duration) {
     $this->backend->expects($this->at(0))->method('acquire')
