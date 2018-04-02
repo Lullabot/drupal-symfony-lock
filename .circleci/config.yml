@@ -15,8 +15,7 @@ test: &test
           # fallback to using the latest cache if no exact match is found
           - v2-test-dependencies-
 
-      # php:* has no zip extension and the CLI is faster to install.
-      - run: apt-get update -y && apt-get install unzip -y
+      - run: apt update && apt install -y libpng-dev && docker-php-ext-install gd zip
 
       - run: |
           EXPECTED_SIGNATURE=$(curl -L https://composer.github.io/installer.sig)
@@ -92,7 +91,7 @@ test_and_cover: &test_and_cover
           command: |
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
-        
+
       # run tests!
       - run: |
           mkdir -p build/logs
