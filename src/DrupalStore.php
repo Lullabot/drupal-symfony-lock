@@ -9,7 +9,7 @@ use Symfony\Component\Lock\Key;
 use Symfony\Component\Lock\StoreInterface;
 
 /**
- *
+ * Wraps a Drupal locking backend with a Symfony store implementation.
  */
 class DrupalStore implements StoreInterface {
 
@@ -21,7 +21,10 @@ class DrupalStore implements StoreInterface {
   private $lockBackend;
 
   /**
+   * Constructs a new DrupalStore.
    *
+   * @param \Drupal\Core\Lock\LockBackendInterface $lockBackend
+   *   The Drupal lock backend to wrap.
    */
   public function __construct(LockBackendInterface $lockBackend) {
     $this->lockBackend = $lockBackend;
@@ -74,7 +77,9 @@ class DrupalStore implements StoreInterface {
    *   Thrown if a lock could not be acquired.
    */
   private function lock(Key $key, bool $blocking = FALSE) {
+    // We use the 30 second default from \Drupal\Core\Lock\LockBackendInterface.
     $duration = ($blocking ? 30 : 0);
+
     if (!$acquired = $this->lockBackend->acquire($key, $duration)) {
       if ($this->lockBackend->wait($key, $duration)) {
         $acquired = $this->lockBackend->acquire($key, $duration);
