@@ -42,7 +42,7 @@ class DrupalStoreTest extends TestCase {
    */
   public function testSave() {
     $this->backend->expects($this->once())->method('acquire')
-      ->with('test-key', 0)
+      ->with('test-key')
       ->willReturn(TRUE);
 
     $key = new Key('test-key');
@@ -66,22 +66,20 @@ class DrupalStoreTest extends TestCase {
    *
    * @param string $method
    *   The method name to call.
-   * @param int $duration
-   *   The expected duration of the lock.
    *
    * @dataProvider retryDataProvider
    */
-  public function testRetry($method, $duration) {
+  public function testRetry($method) {
     $this->backend->expects($this->at(0))->method('acquire')
-      ->with('test-key', $duration)
+      ->with('test-key')
       ->willReturn(FALSE);
 
     $this->backend->expects($this->at(1))->method('wait')
-      ->with('test-key', $duration)
+      ->with('test-key')
       ->willReturn(TRUE);
 
     $this->backend->expects($this->at(2))->method('acquire')
-      ->with('test-key', $duration)
+      ->with('test-key')
       ->willReturn(TRUE);
 
     $key = new Key('test-key');
@@ -94,12 +92,12 @@ class DrupalStoreTest extends TestCase {
    * @dataProvider
    *
    * @return array
-   *   An array with method and duration values.
+   *   An array of methods.
    */
   public function retryDataProvider() {
     return [
-      ['save', 0],
-      ['waitAndSave', 30],
+      ['save'],
+      ['waitAndSave'],
     ];
   }
 
@@ -108,11 +106,11 @@ class DrupalStoreTest extends TestCase {
    */
   public function testLockWaitFailed() {
     $this->backend->expects($this->at(0))->method('acquire')
-      ->with('test-key', 0)
+      ->with('test-key')
       ->willReturn(FALSE);
 
     $this->backend->expects($this->at(1))->method('wait')
-      ->with('test-key', 0)
+      ->with('test-key')
       ->willReturn(FALSE);
 
     $key = new Key('test-key');
@@ -125,15 +123,15 @@ class DrupalStoreTest extends TestCase {
    */
   public function testLockAcquireFailed() {
     $this->backend->expects($this->at(0))->method('acquire')
-      ->with('test-key', 0)
+      ->with('test-key')
       ->willReturn(FALSE);
 
     $this->backend->expects($this->at(1))->method('wait')
-      ->with('test-key', 0)
+      ->with('test-key')
       ->willReturn(TRUE);
 
     $this->backend->expects($this->at(2))->method('acquire')
-      ->with('test-key', 0)
+      ->with('test-key')
       ->willReturn(FALSE);
 
     $key = new Key('test-key');
@@ -142,11 +140,22 @@ class DrupalStoreTest extends TestCase {
   }
 
   /**
-   * Test that we do not support extending expiration TTLs.
+   * Test extending an expiration.
    */
   public function testPutOffExpiration() {
-    $this->expectException(NotSupportedException::class);
-    $this->store->putOffExpiration(new Key('resource'), 10);
+    $this->backend->expects($this->at(0))->method('acquire')
+      ->with('test-key', 10)
+      ->willReturn(true);
+    $this->backend->expects($this->at(1))->method('acquire')
+      ->with('test-key', 10)
+      ->willReturn(false);
+
+    // Test a successful extend.
+    $this->store->putOffExpiration(new Key('test-key'), 10);
+
+    // Test when we are unable to extend the lock.
+    $this->expectException(LockConflictedException::class);
+    $this->store->putOffExpiration(new Key('test-key'), 10);
   }
 
   /**
