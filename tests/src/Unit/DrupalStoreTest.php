@@ -6,7 +6,6 @@ use Drupal\Core\Lock\LockBackendInterface;
 use Lullabot\DrupalSymfonyLock\DrupalStore;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Lock\Exception\LockConflictedException;
-use Symfony\Component\Lock\Exception\NotSupportedException;
 use Symfony\Component\Lock\Key;
 
 /**
@@ -145,10 +144,10 @@ class DrupalStoreTest extends TestCase {
   public function testPutOffExpiration() {
     $this->backend->expects($this->at(0))->method('acquire')
       ->with('test-key', 10)
-      ->willReturn(true);
+      ->willReturn(TRUE);
     $this->backend->expects($this->at(1))->method('acquire')
       ->with('test-key', 10)
-      ->willReturn(false);
+      ->willReturn(FALSE);
 
     // Test a successful extend.
     $this->store->putOffExpiration(new Key('test-key'), 10);
