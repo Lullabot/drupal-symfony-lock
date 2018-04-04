@@ -4,7 +4,6 @@ namespace Lullabot\DrupalSymfonyLock;
 
 use Drupal\Core\Lock\LockBackendInterface;
 use Symfony\Component\Lock\Exception\LockConflictedException;
-use Symfony\Component\Lock\Exception\NotSupportedException;
 use Symfony\Component\Lock\Key;
 use Symfony\Component\Lock\StoreInterface;
 
@@ -41,28 +40,30 @@ class DrupalStore implements StoreInterface {
    * {@inheritdoc}
    */
   public function waitAndSave(Key $key) {
-    $this->lock($key, TRUE);
+    $this->lock($key);
   }
 
   /**
    * {@inheritdoc}
    */
   public function putOffExpiration(Key $key, $ttl) {
-    throw new NotSupportedException('Drupal locks can not have their expiration extended.');
+    if (!$this->lockBackend->acquire((string) $key, $ttl)) {
+      throw new LockConflictedException(sprintf('The lock expiration for %s could not be put off.', $key));
+    }
   }
 
   /**
    * {@inheritdoc}
    */
   public function delete(Key $key) {
-    $this->lockBackend->release($key);
+    $this->lockBackend->release((string) $key);
   }
 
   /**
    * {@inheritdoc}
    */
   public function exists(Key $key) {
-    return !$this->lockBackend->lockMayBeAvailable($key);
+    return !$this->lockBackend->lockMayBeAvailable((string) $key);
   }
 
   /**
@@ -70,19 +71,14 @@ class DrupalStore implements StoreInterface {
    *
    * @param \Symfony\Component\Lock\Key $key
    *   The key to lock.
-   * @param bool $blocking
-   *   (optional) TRUE if acquiring should wait for a lock, FALSE otherwise.
    *
    * @throws \Symfony\Component\Lock\Exception\LockConflictedException
    *   Thrown if a lock could not be acquired.
    */
-  private function lock(Key $key, bool $blocking = FALSE) {
-    // We use the 30 second default from \Drupal\Core\Lock\LockBackendInterface.
-    $duration = ($blocking ? 30 : 0);
-
-    if (!$acquired = $this->lockBackend->acquire($key, $duration)) {
-      if ($this->lockBackend->wait($key, $duration)) {
-        $acquired = $this->lockBackend->acquire($key, $duration);
+  private function lock(Key $key) {
+    if (!$acquired = $this->lockBackend->acquire((string) $key)) {
+      if ($this->lockBackend->wait((string) $key)) {
+        $acquired = $this->lockBackend->acquire((string) $key);
       }
     }
 
