@@ -20,7 +20,11 @@ this class:
 ```php
 <?php
 
-$backend = $this->container->get('lock');
+$backend = \Drupal::lock();
 $store = new \Lullabot\DrupalSymfonyLock\DrupalStore($backend);
-$store->waitAndSave(new \Symfony\Component\Lock\Key('lock-identifier');
+$factory = new \Symfony\Component\Lock\Factory($store);
+$lock = $factory->createLock('lock-identifier', 10);
+
+// Blocking means this will throw an exception on failure.
+$lock->acquire(true);
 ```
