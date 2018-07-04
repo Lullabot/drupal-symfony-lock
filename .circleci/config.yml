@@ -95,7 +95,7 @@ test_and_cover: &test_and_cover
       # run tests!
       - run: |
           mkdir -p build/logs
-          ./cc-test-reporter --debug before-build
+          ./cc-test-reporter before-build
           vendor/bin/phpunit --testsuite Unit
 
       - store_test_results:
@@ -103,7 +103,7 @@ test_and_cover: &test_and_cover
 
       - run: |
           apt-get update -y && apt-get install git -y
-           ./cc-test-reporter --debug after-build --coverage-input-type clover --exit-code $? test-results/clover.xml
+           ./cc-test-reporter after-build --coverage-input-type clover --exit-code $? test-results/clover.xml
 
 code_fixer: &code_fixer
   steps:
