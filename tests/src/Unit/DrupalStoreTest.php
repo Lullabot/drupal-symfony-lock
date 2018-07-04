@@ -75,7 +75,7 @@ class DrupalStoreTest extends TestCase {
 
     $this->backend->expects($this->at(1))->method('wait')
       ->with('test-key')
-      ->willReturn(TRUE);
+      ->willReturn(FALSE);
 
     $this->backend->expects($this->at(2))->method('acquire')
       ->with('test-key')
@@ -127,7 +127,7 @@ class DrupalStoreTest extends TestCase {
 
     $this->backend->expects($this->at(1))->method('wait')
       ->with('test-key')
-      ->willReturn(TRUE);
+      ->willReturn(FALSE);
 
     $this->backend->expects($this->at(2))->method('acquire')
       ->with('test-key')
