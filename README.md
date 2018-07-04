@@ -1,4 +1,4 @@
-# Drupal Symfony Lock!
+# Drupal Symfony Lock
 
 [![CircleCI](https://circleci.com/gh/Lullabot/drupal-symfony-lock.svg?style=svg)](https://circleci.com/gh/Lullabot/drupal-symfony-lock) [![Maintainability](https://api.codeclimate.com/v1/badges/448ece0f1e569fc7d649/maintainability)](https://codeclimate.com/github/Lullabot/drupal-symfony-lock/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/448ece0f1e569fc7d649/test_coverage)](https://codeclimate.com/github/Lullabot/drupal-symfony-lock/test_coverage) [![Packagist](https://img.shields.io/packagist/dt/lullabot/drupal-symfony-lock.svg)](https://packagist.org/packages/lullabot/drupal-symfony-lock)
 
