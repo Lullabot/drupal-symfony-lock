@@ -1,6 +1,6 @@
 # Drupal Symfony Lock
 
-[![CircleCI](https://circleci.com/gh/Lullabot/drupal-symfony-lock.svg?style=svg)](https://circleci.com/gh/Lullabot/drupal-symfony-lock) [![Maintainability](https://api.codeclimate.com/v1/badges/448ece0f1e569fc7d649/maintainability)](https://codeclimate.com/github/Lullabot/drupal-symfony-lock/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/448ece0f1e569fc7d649/test_coverage)](https://codeclimate.com/github/Lullabot/drupal-symfony-lock/test_coverage) [![Packagist](https://img.shields.io/packagist/dt/lullabot/drupal-symfony-lock.svg)](https://packagist.org/packages/lullabot/drupal-symfony-lock)
+[![CircleCI](https://circleci.com/gh/Lullabot/drupal-symfony-lock.svg?style=svg)](https://circleci.com/gh/Lullabot/drupal-symfony-lock) [![Maintainability](https://api.codeclimate.com/v1/badges/68a640924d568cf75781/maintainability)](https://codeclimate.com/github/Lullabot/drupal-symfony-lock/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/68a640924d568cf75781/test_coverage)](https://codeclimate.com/github/Lullabot/drupal-symfony-lock/test_coverage)
 
 Do you want to use a PHP library that requires Symfony's
 [Lock Component](https://symfony.com/doc/3.4/components/lock.html) in your Drupal

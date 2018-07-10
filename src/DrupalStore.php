@@ -77,7 +77,7 @@ class DrupalStore implements StoreInterface {
    */
   private function lock(Key $key) {
     if (!$acquired = $this->lockBackend->acquire((string) $key)) {
-      if ($this->lockBackend->wait((string) $key)) {
+      if (!$this->lockBackend->wait((string) $key)) {
         $acquired = $this->lockBackend->acquire((string) $key);
       }
     }
