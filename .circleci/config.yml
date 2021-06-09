@@ -15,7 +15,7 @@ test: &test
           # fallback to using the latest cache if no exact match is found
           - v2-test-dependencies-
 
-      - run: apt update && apt install -y libpng-dev unzip && docker-php-ext-install gd
+      - run: apt update && apt install -y libpng-dev git unzip && docker-php-ext-install gd
 
       - run: |
           EXPECTED_SIGNATURE=$(curl -L https://composer.github.io/installer.sig)
@@ -57,7 +57,7 @@ test_and_cover: &test_and_cover
           # fallback to using the latest cache if no exact match is found
           - v2-test-cover-dependencies-
 
-      - run: apt update && apt install -y libpng-dev unzip && docker-php-ext-install gd
+      - run: apt update && apt install -y libpng-dev git unzip && docker-php-ext-install gd
 
       - run: |
           EXPECTED_SIGNATURE=$(curl -L https://composer.github.io/installer.sig)
@@ -116,7 +116,7 @@ code_fixer: &code_fixer
           # fallback to using the latest cache if no exact match is found
           - v2-test-dependencies-
 
-      - run: apt update && apt install -y libpng-dev unzip && docker-php-ext-install gd
+      - run: apt update && apt install -y libpng-dev git unzip && docker-php-ext-install gd
 
       - run: |
           EXPECTED_SIGNATURE=$(curl -L https://composer.github.io/installer.sig)
