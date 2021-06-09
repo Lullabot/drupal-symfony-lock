@@ -30,7 +30,7 @@ class DrupalStoreTest extends TestCase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     $this->backend = $this->getMockBuilder(LockBackendInterface::class)
       ->getMock();
     $this->store = new DrupalStore($this->backend);
