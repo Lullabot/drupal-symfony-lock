@@ -3,14 +3,14 @@
 namespace Lullabot\DrupalSymfonyLock;
 
 use Drupal\Core\Lock\LockBackendInterface;
+use Symfony\Component\Lock\BlockingStoreInterface;
 use Symfony\Component\Lock\Exception\LockConflictedException;
 use Symfony\Component\Lock\Key;
-use Symfony\Component\Lock\StoreInterface;
 
 /**
  * Wraps a Drupal locking backend with a Symfony store implementation.
  */
-class DrupalStore implements StoreInterface {
+class DrupalStore implements BlockingStoreInterface {
 
   /**
    * The Drupal lock backend.
