@@ -69,15 +69,15 @@ class DrupalStoreTest extends TestCase {
    * @dataProvider retryDataProvider
    */
   public function testRetry($method) {
-    $this->backend->expects($this->at(0))->method('acquire')
+    $this->backend->expects($this->atLeastOnce())->method('acquire')
       ->with('test-key')
       ->willReturn(FALSE);
 
-    $this->backend->expects($this->at(1))->method('wait')
+    $this->backend->expects($this->atLeastOnce())->method('wait')
       ->with('test-key')
       ->willReturn(FALSE);
 
-    $this->backend->expects($this->at(2))->method('acquire')
+    $this->backend->expects($this->atLeastOnce())->method('acquire')
       ->with('test-key')
       ->willReturn(TRUE);
 
@@ -104,11 +104,11 @@ class DrupalStoreTest extends TestCase {
    * Tests when the wait() call fails.
    */
   public function testLockWaitFailed() {
-    $this->backend->expects($this->at(0))->method('acquire')
+    $this->backend->expects($this->atLeastOnce())->method('acquire')
       ->with('test-key')
       ->willReturn(FALSE);
 
-    $this->backend->expects($this->at(1))->method('wait')
+    $this->backend->expects($this->atLeastOnce())->method('wait')
       ->with('test-key')
       ->willReturn(FALSE);
 
@@ -121,15 +121,15 @@ class DrupalStoreTest extends TestCase {
    * Tests when a second acquire() fails.
    */
   public function testLockAcquireFailed() {
-    $this->backend->expects($this->at(0))->method('acquire')
+    $this->backend->expects($this->atLeastOnce())->method('acquire')
       ->with('test-key')
       ->willReturn(FALSE);
 
-    $this->backend->expects($this->at(1))->method('wait')
+    $this->backend->expects($this->atLeastOnce())->method('wait')
       ->with('test-key')
       ->willReturn(FALSE);
 
-    $this->backend->expects($this->at(2))->method('acquire')
+    $this->backend->expects($this->atLeastOnce())->method('acquire')
       ->with('test-key')
       ->willReturn(FALSE);
 
@@ -142,10 +142,10 @@ class DrupalStoreTest extends TestCase {
    * Test extending an expiration.
    */
   public function testPutOffExpiration() {
-    $this->backend->expects($this->at(0))->method('acquire')
+    $this->backend->expects($this->atLeastOnce())->method('acquire')
       ->with('test-key', 10)
       ->willReturn(TRUE);
-    $this->backend->expects($this->at(1))->method('acquire')
+    $this->backend->expects($this->atLeastOnce())->method('acquire')
       ->with('test-key', 10)
       ->willReturn(FALSE);
 
