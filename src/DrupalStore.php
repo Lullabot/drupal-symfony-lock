@@ -62,7 +62,7 @@ class DrupalStore implements BlockingStoreInterface {
   /**
    * {@inheritdoc}
    */
-  public function exists(Key $key) {
+  public function exists(Key $key): bool {
     return !$this->lockBackend->lockMayBeAvailable((string) $key);
   }
 

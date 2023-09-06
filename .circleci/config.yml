@@ -164,8 +164,6 @@ jobs:
     docker:
       - image: php:8.2
     working_directory: ~/repo
-    environment:
-      - COMPOSER_FLAGS: --prefer-lowest
     <<: *test
 
   code_fixer:
