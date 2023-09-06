@@ -149,33 +149,26 @@ jobs:
     docker:
       # specify the version you desire here
       - image: php:8.0
-
     working_directory: ~/repo
-
     <<: *test_and_cover
 
-  build_php73:
+  build_php81:
     docker:
-      - image: php:7.3
-
+      - image: php:8.1
     working_directory: ~/repo
-
     environment:
       - COMPOSER_FLAGS: --prefer-lowest
-
     <<: *test
 
-  build_php74:
+  build_php82:
     docker:
-      - image: php:7.4
-
+      - image: php:8.2
     working_directory: ~/repo
-
     <<: *test
 
   code_fixer:
     docker:
-      - image: php:8.0
+      - image: php:8.1
 
     working_directory: ~/repo
 
@@ -188,8 +181,8 @@ workflows:
   test_cover_workflow:
     jobs:
       - build
-      - build_php73
-      - build_php74
+      - build_php81
+      - build_php82
       - code_fixer
 
   nightly:
@@ -203,6 +196,4 @@ workflows:
                 - main
     jobs:
       - build
-      - build_php73
-      - build_php74
       - code_fixer
