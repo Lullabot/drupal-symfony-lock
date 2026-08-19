@@ -32,21 +32,21 @@ class DrupalStore implements BlockingStoreInterface {
   /**
    * {@inheritdoc}
    */
-  public function save(Key $key) {
+  public function save(Key $key): void {
     $this->lock($key);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function waitAndSave(Key $key) {
+  public function waitAndSave(Key $key): void {
     $this->lock($key);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function putOffExpiration(Key $key, $ttl) {
+  public function putOffExpiration(Key $key, float $ttl): void {
     if (!$this->lockBackend->acquire((string) $key, $ttl)) {
       throw new LockConflictedException(sprintf('The lock expiration for %s could not be put off.', $key));
     }
@@ -55,7 +55,7 @@ class DrupalStore implements BlockingStoreInterface {
   /**
    * {@inheritdoc}
    */
-  public function delete(Key $key) {
+  public function delete(Key $key): void {
     $this->lockBackend->release((string) $key);
   }
 
@@ -75,7 +75,7 @@ class DrupalStore implements BlockingStoreInterface {
    * @throws \Symfony\Component\Lock\Exception\LockConflictedException
    *   Thrown if a lock could not be acquired.
    */
-  private function lock(Key $key) {
+  private function lock(Key $key): void {
     if (!$acquired = $this->lockBackend->acquire((string) $key)) {
       if (!$this->lockBackend->wait((string) $key)) {
         $acquired = $this->lockBackend->acquire((string) $key);
