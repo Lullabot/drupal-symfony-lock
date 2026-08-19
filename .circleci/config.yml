@@ -161,14 +161,21 @@ jobs:
     working_directory: ~/repo
     <<: *test_and_cover
 
-  # Lowest dependencies. Resolves to Drupal 10, Symfony Lock 6.0 and PHPUnit 9,
-  # which is the other end of every declared constraint.
+  # Lowest dependencies on the lowest supported PHP, so the declared floor is
+  # actually exercised rather than just asserted. Resolves to Drupal 10,
+  # Symfony Lock 6.0 and PHPUnit 9, the other end of every declared constraint.
   build_lowest:
     docker:
-      - image: php:8.3
+      - image: php:8.1
     working_directory: ~/repo
     environment:
       - COMPOSER_FLAGS: --prefer-lowest
+    <<: *test
+
+  build_php82:
+    docker:
+      - image: php:8.2
+    working_directory: ~/repo
     <<: *test
 
   build_php84:
@@ -193,6 +200,7 @@ workflows:
     jobs:
       - build
       - build_lowest
+      - build_php82
       - build_php84
       - code_fixer
 
