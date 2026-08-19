@@ -69,17 +69,16 @@ class DrupalStoreTest extends TestCase {
    * @dataProvider retryDataProvider
    */
   public function testRetry($method) {
-    $this->backend->expects($this->at(0))->method('acquire')
+    // The first acquire fails, the wait then fails, and the second acquire
+    // succeeds. Expectations are per method rather than indexed across every
+    // invocation on the mock, which is what the removed at() matcher did.
+    $this->backend->expects($this->exactly(2))->method('acquire')
+      ->with('test-key')
+      ->willReturnOnConsecutiveCalls(FALSE, TRUE);
+
+    $this->backend->expects($this->once())->method('wait')
       ->with('test-key')
       ->willReturn(FALSE);
-
-    $this->backend->expects($this->at(1))->method('wait')
-      ->with('test-key')
-      ->willReturn(FALSE);
-
-    $this->backend->expects($this->at(2))->method('acquire')
-      ->with('test-key')
-      ->willReturn(TRUE);
 
     $key = new Key('test-key');
     $this->store->$method($key);
@@ -93,7 +92,7 @@ class DrupalStoreTest extends TestCase {
    * @return array
    *   An array of methods.
    */
-  public function retryDataProvider() {
+  public static function retryDataProvider() {
     return [
       ['save'],
       ['waitAndSave'],
@@ -142,12 +141,9 @@ class DrupalStoreTest extends TestCase {
    * Test extending an expiration.
    */
   public function testPutOffExpiration() {
-    $this->backend->expects($this->at(0))->method('acquire')
+    $this->backend->expects($this->exactly(2))->method('acquire')
       ->with('test-key', 10)
-      ->willReturn(TRUE);
-    $this->backend->expects($this->at(1))->method('acquire')
-      ->with('test-key', 10)
-      ->willReturn(FALSE);
+      ->willReturnOnConsecutiveCalls(TRUE, FALSE);
 
     // Test a successful extend.
     $this->store->putOffExpiration(new Key('test-key'), 10);
